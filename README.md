@@ -11,7 +11,10 @@ It grew out of a real investigation, in which an AI pipeline over digitised
 colonial archives turned up a lost meteorite fall and a few other things the
 catalogues had missed. The process, the mistakes and the lessons are written
 up in [AI found a lost meteorite in the archives](https://jessewaites.com/blog/post/ai-found-a-lost-meteorite-in-the-archives).
-Antiquity is that process, packaged.
+We built the plane as we flew it: the folder layout, the two-model funnel,
+the rule that nothing is a find until it has been read on the original page
+image, all of it was invented mid-flight. With the investigation done,
+Antiquity codifies that pipeline so the next one starts with it.
 
 ```sh
 go install github.com/jessewaites/antiquity@latest
