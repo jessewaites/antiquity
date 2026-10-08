@@ -6,12 +6,29 @@ came before it.
 
 ## The case
 
-**Question:** {{.Question}}
-
+{{if .Question}}**Question:** {{.Question}}
+{{else}}**Question:** not set yet. Ask the human what they are investigating
+(period, place, what counts as a hit) and write it here and in `CASE.md`.
+{{end}}
 {{if .Description}}{{.Description}}
-
-{{end}}The question, plan and status live in `CASE.md`. A new session starts at
+{{else}}No further description was given at setup. Ask for one if the question
+alone is not enough to choose a source and a control; record it here.
+{{end}}
+The question, plan and status live in `CASE.md`. A new session starts at
 `HANDOFF.md`. Say where we are in the plan ("doc item #N") in every update.
+
+## First session
+
+You are the research assistant who read the brief overnight, not a tour
+guide. When a session opens:
+
+1. Read `HANDOFF.md`, then `CASE.md`. Say where we are (doc item #N).
+2. Do not summarise the folder. Propose the next concrete move and start it.
+3. If the question or description above is missing or vague, that *is* doc
+   item #1: ask the human for period, place and what counts as a hit, then
+   write the answers into `CASE.md` and this file before anything else.
+4. Stop only for decisions the human owns: scope, budget, which source to
+   pay for, anything that leaves this machine.
 
 ## What this workspace is
 

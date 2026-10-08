@@ -23,7 +23,7 @@ Usage:
   antiquity new [case-name] [flags]   open a new case
       --question "..."      the one-line question
       --description "..."   more context for the agent
-      --yes                 skip the wizard (needs a name and --question)
+      --yes                 skip the wizard (needs a name; the agent asks the rest)
       --no-intro            skip the title screen
       --no-git              do not git init the case
       --dir PATH            parent directory (default: current)
@@ -78,8 +78,8 @@ func cmdNew(args []string) {
 	}
 
 	if *yes {
-		if c.Slug == "" || strings.TrimSpace(c.Question) == "" {
-			fail(errors.New("--yes needs a case name and --question"))
+		if c.Slug == "" {
+			fail(errors.New("--yes needs a case name"))
 		}
 	} else {
 		if !*noIntro {
@@ -101,6 +101,9 @@ func cmdNew(args []string) {
 	}
 	fmt.Printf("Created %s\n\n%s\n", shorten(path), scaffold.Tree(c))
 	fmt.Printf("Next:\n  cd %s\n  open your coding agent; it reads AGENTS.md first.\n", shorten(path))
+	if strings.TrimSpace(c.Question) == "" {
+		fmt.Println("  the question is not set; the agent will ask you for it (doc item #1).")
+	}
 	if len(c.Keys) == 0 || allBlank(c.Keys) {
 		fmt.Println("  copy keys.example.yml to keys.yml and fill in what you have.")
 	}

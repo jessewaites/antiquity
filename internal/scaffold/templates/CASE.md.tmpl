@@ -4,13 +4,13 @@
 
 ## Question
 
-{{.Question}}
+{{if .Question}}{{.Question}}{{else}}<!-- not set yet: doc item #1 is to ask the human and fill this in -->{{end}}
 
-{{if .Description}}## Why it matters
+## Why it matters
 
-{{.Description}}
+{{if .Description}}{{.Description}}{{else}}<!-- not set yet: ask the human, or infer from the question and confirm -->{{end}}
 
-{{end}}## Sources
+## Sources
 
 <!-- one line per source, each with a recipe in sources/<name>.md -->
 
@@ -20,4 +20,17 @@
 
 ## Plan
 
-1. <!-- doc item #1 -->
+Doc items. Say which one you are on in every update.
+
+1. **Scope.** Confirm period, place and what counts as a hit. Write it under
+   Question above and in `AGENTS.md`.
+2. **First source.** Pick the source most likely to hold the answer. Write
+   its recipe in `sources/` from `templates/source.md`.
+3. **Control.** Pick one known, already-published event the pipeline must
+   re-find. Write it in `controls/`.
+4. **Retrieve.** Keyword regex plus semantic search over the source; configs
+   in `queries/`. Confirm the control is in the candidates.
+5. **Sort, read, verify.** Cheap judge, then reader, then page images.
+   Log counts and cost in `runs/`.
+6. **Novelty and write-up.** Check `catalogues/`, save evidence, write the
+   finding, add a beat to `NARRATIVE.md`.

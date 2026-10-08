@@ -60,12 +60,20 @@ func TestWrite(t *testing.T) {
 	}
 }
 
-func TestWriteNoKeys(t *testing.T) {
-	dir, err := Write(t.TempDir(), Case{Slug: "x", Question: "q"})
+func TestWriteBare(t *testing.T) {
+	dir, err := Write(t.TempDir(), Case{Slug: "x"})
 	if err != nil {
 		t.Fatal(err)
 	}
 	if _, err := os.Stat(filepath.Join(dir, "keys.yml")); err == nil {
 		t.Error("keys.yml should not exist without keys")
+	}
+	agents, _ := os.ReadFile(filepath.Join(dir, "AGENTS.md"))
+	if !strings.Contains(string(agents), "not set yet") || !strings.Contains(string(agents), "## First session") {
+		t.Error("AGENTS.md should tell the agent to ask for the question")
+	}
+	cs, _ := os.ReadFile(filepath.Join(dir, "CASE.md"))
+	if !strings.Contains(string(cs), "1. **Scope.**") {
+		t.Error("CASE.md should carry the pre-filled plan")
 	}
 }

@@ -169,11 +169,6 @@ func (m *Model) next() tea.Cmd {
 			m.errMsg = "A case needs a name."
 			return nil
 		}
-	case stepQuestion:
-		if strings.TrimSpace(m.question.Value()) == "" {
-			m.errMsg = "One line is enough, but the agent needs to know what it is looking for."
-			return nil
-		}
 	case stepKeys:
 		if m.keyIdx < len(m.keys)-1 {
 			m.keyIdx++
@@ -241,7 +236,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "shift+tab":
 			return m, m.back()
 		case "ctrl+s":
-			if m.step == stepKeys {
+			if m.step != stepConfirm && scaffold.Slugify(m.name.Value()) != "" {
+				m.errMsg = ""
 				m.step = stepConfirm
 				return m, m.focus()
 			}
@@ -292,17 +288,17 @@ func (m Model) render() string {
 		if slug := scaffold.Slugify(m.name.Value()); slug != "" {
 			body += "\n" + hintStyle.Render("  → "+m.parent+"/"+slug+"/")
 		}
-		hint = "enter continue   esc quit"
+		hint = "enter continue   ctrl+s skip the rest   esc quit"
 	case stepQuestion:
 		label = "What are you investigating?"
-		help = "One line. This is the question the agent will carry through every run."
+		help = "One line, with period, place and what counts as a hit. Leave blank and the agent will ask you."
 		body = m.question.View()
-		hint = "enter continue   esc back"
+		hint = "enter continue   ctrl+s skip the rest   esc back"
 	case stepDescription:
 		label = "Tell the agent more."
 		help = "Optional. Goes into AGENTS.md and CASE.md, so the agent starts with your context."
 		body = m.descView()
-		hint = "tab continue   enter newline   esc back"
+		hint = "tab continue   enter newline   ctrl+s skip the rest   esc back"
 	case stepKeys:
 		label = "API keys, if you have them handy."
 		help = "Optional. Leave blank to skip. Written to keys.yml (chmod 600, gitignored); you can fill it in later instead."
@@ -311,13 +307,17 @@ func (m Model) render() string {
 			rows = append(rows, keyLabel.Render(p.Label)+m.keys[i].View())
 		}
 		body = strings.Join(rows, "\n")
-		hint = "enter next field   ctrl+s skip all   esc back"
+		hint = "enter next field   ctrl+s skip   esc back"
 	case stepConfirm:
 		c := m.collect()
 		label = "Create the case?"
 		help = m.parent + "/" + c.Slug + "/"
 		var sb strings.Builder
-		sb.WriteString(keyLabel.Render("question") + valueStyle.Render(truncate(c.Question, m.inputWidth()-16)) + "\n")
+		q := c.Question
+		if q == "" {
+			q = "not set; the agent will ask you"
+		}
+		sb.WriteString(keyLabel.Render("question") + valueStyle.Render(truncate(q, m.inputWidth()-16)) + "\n")
 		if c.Description != "" {
 			sb.WriteString(keyLabel.Render("description") + valueStyle.Render(truncate(strings.ReplaceAll(c.Description, "\n", " "), m.inputWidth()-16)) + "\n")
 		}

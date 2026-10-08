@@ -74,6 +74,21 @@ func TestWalkthrough(t *testing.T) {
 	t.Log("\n" + view)
 }
 
+func TestSkipEverything(t *testing.T) {
+	m := New("~", scaffold.Case{})
+	m = press(m, "x", "ctrl+s")
+	if m.step != stepConfirm {
+		t.Fatalf("ctrl+s on name should jump to confirm; step=%d", m.step)
+	}
+	if !strings.Contains(plain(m.View()), "not set; the agent will ask you") {
+		t.Error("confirm should say the question is unset")
+	}
+	m = press(m, "enter")
+	if !m.Confirmed || m.Case.Slug != "x" || m.Case.Question != "" {
+		t.Errorf("case: %+v", m.Case)
+	}
+}
+
 func TestEveryScreenRenders(t *testing.T) {
 	m := New("~/Code", scaffold.Case{})
 	for s := step(0); s < stepCount; s++ {

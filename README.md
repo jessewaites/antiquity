@@ -12,7 +12,9 @@ antiquity new bird-sightings
 ```
 
 That opens the title screen, asks four questions (name, the one-line
-question, a longer description, optional API keys) and creates:
+question, a longer description, optional API keys) and creates the case.
+Everything after the name is optional: ctrl+s skips the rest, and the
+generated AGENTS.md tells the agent to ask you for whatever is missing.
 
 ```
 bird-sightings/
@@ -29,7 +31,7 @@ bird-sightings/
 The case is `git init`-ed with a pre-commit hook that refuses `keys.yml` and
 anything that looks like an API key.
 
-Non-interactive, for agents and scripts:
+Non-interactive, for agents and scripts (only the name is required):
 
 ```sh
 antiquity new bird-sightings --yes \
