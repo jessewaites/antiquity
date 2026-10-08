@@ -19,6 +19,8 @@ Antiquity codifies that pipeline so the next one starts with it.
 ```sh
 go install github.com/jessewaites/antiquity@latest
 antiquity new my-investigation
+cd my-investigation
+# initialize your agent
 ```
 
 That opens the title screen, asks four questions (name, the one-line
