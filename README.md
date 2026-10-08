@@ -18,7 +18,7 @@ Antiquity codifies that pipeline so the next one starts with it.
 
 ```sh
 go install github.com/jessewaites/antiquity@latest
-antiquity new bird-sightings
+antiquity new my-investigation
 ```
 
 That opens the title screen, asks four questions (name, the one-line
@@ -27,7 +27,7 @@ Everything after the name is optional: ctrl+s skips the rest, and the
 generated AGENTS.md tells the agent to ask you for whatever is missing.
 
 ```
-bird-sightings/
+my-investigation/
   AGENTS.md          rules, the seven-step loop, traps, folder map, your case
   CASE.md            question, status, plan
   HANDOFF.md         start here next session
@@ -44,7 +44,7 @@ anything that looks like an API key.
 Non-interactive, for agents and scripts (only the name is required):
 
 ```sh
-antiquity new bird-sightings --yes \
+antiquity new my-investigation --yes \
   --question "Pre-1800 bird sightings in Dutch colonial records" \
   --description "Searching ship logbooks for dodo sightings after 1660."
 ```
