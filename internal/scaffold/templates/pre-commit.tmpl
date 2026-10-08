@@ -1,0 +1,11 @@
+#!/bin/sh
+# Antiquity secret check. Refuses keys.yml and anything that looks like a key.
+if git diff --cached --name-only | grep -qx 'keys.yml'; then
+  echo "pre-commit: keys.yml is private and must not be committed." >&2
+  exit 1
+fi
+if git diff --cached -U0 | grep -E '^\+' | grep -Eq 'sk-ant-[A-Za-z0-9_-]{20,}|sk-[A-Za-z0-9_-]{20,}|ts_[A-Za-z0-9]{16,}|AKIA[0-9A-Z]{16}'; then
+  echo "pre-commit: staged changes contain something that looks like an API key." >&2
+  exit 1
+fi
+exit 0

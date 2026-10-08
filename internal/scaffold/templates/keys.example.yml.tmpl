@@ -1,0 +1,17 @@
+# Copy to keys.yml and fill in what you have. keys.yml is gitignored and
+# should be chmod 600. Never print, log or commit keys.
+roles:
+  judge:    {provider: anthropic, model: claude-haiku-5-5}
+  reader:   {provider: anthropic, model: claude-sonnet-5-5}
+  embedder: {provider: local, model: Qwen/Qwen3-Embedding-0.6B}
+  vision:   {provider: anthropic, model: claude-haiku-5-5}
+providers:
+  anthropic:  {api_key: ""}
+  openai:     {api_key: ""}
+  typesafe:   {api_key: ""}
+  cloudflare: {account_id: "", api_token: ""}
+sources: {}        # data-source credentials, e.g. trove: {api_key: ""}
+notify: {}         # e.g. ntfy: {topic: ""}
+budget:
+  per_run_usd: 5   # hard cap per run; ask before exceeding
+  per_day_usd: 25

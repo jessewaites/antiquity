@@ -1,0 +1,13 @@
+# Private. chmod 600, gitignored. Never print, log or commit.
+roles:
+  judge:    {provider: anthropic, model: claude-haiku-5-5}
+  reader:   {provider: anthropic, model: claude-sonnet-5-5}
+  embedder: {provider: local, model: Qwen/Qwen3-Embedding-0.6B}
+  vision:   {provider: anthropic, model: claude-haiku-5-5}
+providers:
+{{range $k, $v := .KeyValues}}  {{$k}}: {api_key: {{printf "%q" $v}}}
+{{end}}sources: {}
+notify: {}
+budget:
+  per_run_usd: 5
+  per_day_usd: 25

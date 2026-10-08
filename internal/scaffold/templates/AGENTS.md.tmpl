@@ -1,0 +1,144 @@
+# AGENTS.md — {{.Slug}}
+
+Read this before doing anything in this directory. It is the rules of the game
+for any AI agent working this case, and the lessons of the investigations that
+came before it.
+
+## The case
+
+**Question:** {{.Question}}
+
+{{if .Description}}{{.Description}}
+
+{{end}}The question, plan and status live in `CASE.md`. A new session starts at
+`HANDOFF.md`. Say where we are in the plan ("doc item #N") in every update.
+
+## What this workspace is
+
+Antiquity scaffolds an opinionated workspace for AI-assisted historical
+investigation. It does not run the pipeline. You write the scripts, fetch the
+data, call the models, and keep the folders honest. Prefer a small script you
+can drop into when a source misbehaves over a framework. Prefer a good default
+and a sentence of advice over a feature.
+
+## The loop
+
+Every question goes through this, in order. Skipping a step is how false finds
+happen.
+
+1. **Question.** Pick a source that could answer it, and a known-answer
+   **control** the pipeline must re-find. Write both in `CASE.md` and
+   `controls/`.
+2. **Retrieve wide.** Keyword regex over everything plus semantic search
+   (embeddings) → candidates. Configs go in `queries/`.
+3. **Sort cheap.** A fast judge model over every candidate: real? what kind?
+   where? → a few hundred survivors. Questions go in `judges/`.
+4. **Read carefully.** A reader model extracts date, place, quote,
+   translation → dozens. The reader only ever sees survivors of step 3.
+5. **Verify on the original page image.** A human or a vision model reads the
+   scan. → a handful. Nothing is a find before this step.
+6. **Novelty check** against the catalogues and literature in `catalogues/`
+   before calling anything new. Record *how* each catalogue was checked.
+7. **Save evidence and write it up.** Full page and crop in `evidence/`,
+   a note in `findings/`, a beat in `NARRATIVE.md`.
+
+## Rules
+
+- Verify on the original page image before calling anything a find. Until
+  then it is a *candidate*. Say "candidate".
+- Read the **dateline**. The place is where the dispatch was written, not the
+  newspaper's town, not the archive's finding-aid place, not the letter's
+  port of departure.
+- Every negative result needs a known-answer control. Report recall: which
+  controls were missed, every run.
+- Novelty: check the named catalogues and literature. Record whether you did
+  a full read or a search-inside, and note when search-inside is unreliable.
+- Save evidence for every find **and** every instructive reject
+  (`REJECTED_` prefix). The rejects teach the next judge.
+- Cheap judge first, expensive reader second, scan check last. Never send the
+  whole candidate list to the reader; a judge pre-sort is ~50× cheaper.
+- Model outputs are leads, not facts. Coerce types, check stop reasons,
+  spot-check against the page, and expect confident gap-filling.
+- Log cost per model role per run in `runs/`. Stay under the budget in
+  `keys.yml`; ask before exceeding it.
+- Keep `NARRATIVE.md` current with credits (who had which idea). Keep
+  `HANDOFF.md` current enough that a fresh session can continue.
+- Never send, publish, post or email anything. Outreach goes in `drafts/` as
+  plain text for a human to send.
+- Never print, log, commit or paste API keys. They live in `keys.yml` (chmod
+  600, gitignored) or environment variables only.
+
+## Traps that burned previous investigations
+
+- **Dateline and place errors are the #1 killer.** Foreign news printed under
+  "here"; a colonial capital's letters covering a whole empire (elephants in
+  Ceylon reported "on Java"); inventories from one station read as another.
+- **Word traps.** Common words that mean something else in the source
+  (an animal name that is a ship, a place name containing an animal, a
+  generic word for livestock). Keep a list in `lessons.md` and feed it back
+  into `queries/` and `judges/`.
+- **Storms reported as earthquakes**, which reached even a national catalogue.
+  Weather can masquerade as the phenomenon you are hunting.
+- **Models misreading names** and filling gaps confidently. Two independent
+  readings beat one confident one.
+- **Silent truncation.** Thinking tokens eating the output budget; pages cut
+  short. Check stop reasons and output lengths.
+- **Recall gaps.** Known events the pipeline failed to re-find. The control
+  run is not optional.
+- **Over-early finds.** Candidates announced on day one that collapsed on the
+  scan. Hold the word "find" until step 5.
+- **Shell trivia.** zsh word-splitting, loops overwriting downloads, rate
+  limits (HTTP 429), image-only PDFs with no text layer.
+
+## Model roles and keys
+
+Two roles, bring your own provider for each:
+
+- **judge** — fast, cheap, typed answers (yes/no, choice, score). Runs over
+  every candidate.
+- **reader** — extraction, translation, date and place resolution, page-image
+  transcription, write-ups.
+
+Optional: **embedder** (local GPU model or an API), **vision** (scan
+transcription; may be the reader model).
+
+`keys.example.yml` shows the shape. Copy it to `keys.yml` and fill in what
+you have. {{if .Keys}}Keys were provided at setup for: {{join .Keys ", "}}.{{else}}No keys were provided at setup.{{end}}
+Write judge questions once in a provider-neutral form (yes/no, choice{...},
+score[...]) so the provider can be swapped.
+
+## Data and compute
+
+Sources live in `sources/<name>.md`, one recipe per source: what it is, its
+licence, a working URL, a ~10-line snippet that fetches it, how to get a page
+image by archive reference, and the citation format. If the corpus already
+exists elsewhere on this machine (another case used it), write its path in
+the recipe and do not copy it.
+
+Embedding a big source needs a GPU. Rent one for a night if needed, use an
+embeddings API or plain keyword search for small sources, or let the judge
+read everything when the source is tiny. Sizing from past runs: 5.7M chunks
+≈ 12 h on an RTX 4090 and ~26 GB of vectors; 1.7M ≈ 3–4 h; smaller sources
+take minutes.
+
+## Folder map
+
+| Folder | What goes there |
+|---|---|
+| `sources/` | one recipe per source (see above) |
+| `data/` | raw, parquet, chunks, index — gitignored |
+| `queries/` | retrieval configs: regexes with known traps, semantic queries, windows |
+| `judges/` | judge questions and extraction schemas, versioned |
+| `runs/` | every run: config snapshot, counts at each funnel stage, cost, log |
+| `candidates/` | one row per candidate with status: new → sorted → read → verified / rejected |
+| `evidence/` | page images: `<date>_<place>_<what>_<archive-ref>_{full,crop}.jpg`; `REJECTED_` prefix |
+| `findings/` | `FINDING_<date>_<slug>.md` from `templates/FINDING.md` |
+| `theories/` | hypotheses and what would confirm or refute each |
+| `catalogues/` | reference catalogues for novelty checks, and how each was checked |
+| `controls/` | known events the pipeline must re-find; recall results per run |
+| `todo/` | small actionable items, one file each, with progress notes |
+| `drafts/` | outreach notes for a human to send; never sent by an agent |
+| `templates/` | finding note, source recipe, judge question |
+
+`lessons.md` collects the traps found in *this* case's sources. Add to it the
+moment you hit one.
