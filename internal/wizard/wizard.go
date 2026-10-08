@@ -301,7 +301,7 @@ func (m Model) render() string {
 	case stepDescription:
 		label = "Tell the agent more."
 		help = "Optional. Goes into AGENTS.md and CASE.md, so the agent starts with your context."
-		body = m.desc.View()
+		body = m.descView()
 		hint = "tab continue   enter newline   esc back"
 	case stepKeys:
 		label = "API keys, if you have them handy."
@@ -355,6 +355,20 @@ func (m Model) render() string {
 
 	content := lipgloss.NewStyle().Width(m.inputWidth()).Render(sb.String())
 	return lipgloss.Place(w, h, lipgloss.Center, lipgloss.Center, content)
+}
+
+// descView works around a Bubbles quirk: placeholder lines after the first
+// are drawn in the cursor-line style, so that style is dimmed while empty.
+func (m Model) descView() string {
+	if m.desc.Value() != "" {
+		return m.desc.View()
+	}
+	d := m.desc
+	st := d.Styles()
+	st.Focused.CursorLine = lipgloss.NewStyle().Foreground(faint)
+	st.Blurred.CursorLine = st.Focused.CursorLine
+	d.SetStyles(st)
+	return d.View()
 }
 
 func truncate(s string, n int) string {
