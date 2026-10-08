@@ -1,5 +1,7 @@
 # Antiquity
 
+https://github.com/user-attachments/assets/f6078aad-cb45-4230-8e28-3e4118ede52c
+
 AI-assisted historical investigation. A CLI that scaffolds an opinionated
 workspace for hunting through historical sources with AI agents: the folder
 conventions, the rules of the game in `AGENTS.md`, the templates, and the
