@@ -2,11 +2,16 @@
 
 https://github.com/user-attachments/assets/f6078aad-cb45-4230-8e28-3e4118ede52c
 
-AI-assisted historical investigation. A CLI that scaffolds an opinionated
-workspace for hunting through historical sources with AI agents: the folder
-conventions, the rules of the game in `AGENTS.md`, the templates, and the
-traps that burned the investigations that came before. Your own coding agent
-does the plumbing.
+Antiquity is a CLI that scaffolds an opinionated workspace for hunting
+through historical sources with AI agents: the folder conventions, the rules
+of the game in `AGENTS.md`, the templates, and the traps that burned the
+investigations that came before. Your own coding agent does the plumbing.
+
+It grew out of a real investigation, in which an AI pipeline over digitised
+colonial archives turned up a lost meteorite fall and a few other things the
+catalogues had missed. The process, the mistakes and the lessons are written
+up in [AI found a lost meteorite in the archives](https://jessewaites.com/blog/post/ai-found-a-lost-meteorite-in-the-archives).
+Antiquity is that process, packaged.
 
 ```sh
 go install github.com/jessewaites/antiquity@latest
