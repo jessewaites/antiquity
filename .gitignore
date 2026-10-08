@@ -4,3 +4,5 @@
 .DS_Store
 keys.yml
 /bird-sightings/
+*.mp4
+*.gif
