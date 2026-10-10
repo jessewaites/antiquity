@@ -21,12 +21,12 @@ king, and three volcanic eruptions the Smithsonian's list doesn't have. The
 full story is in
 [I Pointed AI at 400 Years of Historical Archives](https://jessewaites.com/blog/post/i-pointed-ai-at-400-years-of-archives).
 
-We built the plane as we flew it. The folder layout, the chain of cheap and
+I built the plane as I flew it. The folder layout, the chain of cheap and
 expensive models, the rule that nothing is a find until it has been read on
 the original page: all of it was invented mid-flight, and most of the
 mistakes were made at least once before they became rules. With the
 investigation done, Antiquity packages that process so the next person starts
-where we finished. It is for anyone with a question about the past, a public
+where I finished. It is for anyone with a question about the past, a public
 archive that might hold the answer, and a coding agent such as Claude Code or
 Codex to do the work.
 
@@ -34,7 +34,7 @@ Codex to do the work.
 
 Antiquity does not search archives or call AI models itself. It creates a
 case folder with everything an AI coding agent needs to run the investigation
-properly, and a briefing that stops it from making the mistakes we made. You
+properly, and a briefing that stops it from making the mistakes I made. You
 open your agent inside the folder and it takes it from there, asking you for
 whatever is missing.
 
@@ -73,7 +73,7 @@ This is the loop from the investigation, written into every generated
 1. **Ask a question, and bury a wristwatch.** Before searching for anything
    new, pick a known event the pipeline must re-find. If a metal detector
    can't find the watch you buried in your own yard, you fix the detector
-   before you trust its silence anywhere else. Ours had to find Breen's dodo
+   before you trust its silence anywhere else. Mine had to find Breen's dodo
    and the Laki and Tambora eruptions before it was allowed to look for
    anything unknown.
 2. **Retrieve wide.** Nobody in the 1600s spelled anything the same way
@@ -99,7 +99,7 @@ This is the loop from the investigation, written into every generated
    with the archive reference anyone can look up, plus a finding note and a
    line in the narrative recording who had which idea.
 
-The briefing also carries the traps that cost us the most time. The worst is
+The briefing also carries the traps that cost me the most time. The worst is
 the dateline: a report printed in Batavia under "here" may describe
 something that happened in Ceylon, and the archive's finding aid may file a
 Cape Town inventory under Java. Then the word traps: in the Cape records a
