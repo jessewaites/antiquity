@@ -19,7 +19,9 @@ meteorite fall in India in 1812 that no catalogue records, three Javan
 rhinoceroses shipped as royal gifts in 1738 to 1740 that never reached the
 king, and three volcanic eruptions the Smithsonian's list doesn't have. The
 full story is in
-[I Pointed AI at 400 Years of Historical Archives](https://jessewaites.com/blog/post/i-pointed-ai-at-400-years-of-archives).
+[I Pointed AI at 400 Years of Historical Archives](https://jessewaites.com/blog/post/i-pointed-ai-at-400-years-of-archives),
+and the architecture and methodology are in a
+[case study on JTPCK](https://jtpck.com/case-studies/ai-archive-search).
 
 I built the plane as I flew it. The folder layout, the chain of cheap and
 expensive models, the rule that nothing is a find until it has been read on
@@ -29,6 +31,10 @@ investigation done, Antiquity packages that process so the next person starts
 where I finished. It is for anyone with a question about the past, a public
 archive that might hold the answer, and a coding agent such as Claude Code or
 Codex to do the work.
+
+Need a system like this built for your own documents?
+[JTPCK](https://jtpck.com/services/ai-document-analysis) builds custom AI
+research and document analysis systems.
 
 ## What it does
 
