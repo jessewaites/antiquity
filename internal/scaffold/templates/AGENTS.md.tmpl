@@ -84,6 +84,9 @@ happen.
   (`REJECTED_` prefix). The rejects teach the next judge.
 - Cheap judge first, expensive reader second, scan check last. Never send the
   whole candidate list to the reader; a judge pre-sort is ~50× cheaper.
+  But never stop at the judge: every candidate that passes it goes to the
+  reader before you report results. Build the reader into the run itself so
+  it can't be skipped.
 - Model outputs are leads, not facts. Coerce types, check stop reasons,
   spot-check against the page, and expect confident gap-filling.
 - Log cost per model role per run in `runs/`. Stay under the budget in
