@@ -115,7 +115,8 @@ happen.
 - **Over-early finds.** Candidates announced on day one that collapsed on the
   scan. Hold the word "find" until step 5.
 - **Shell trivia.** zsh word-splitting, loops overwriting downloads, rate
-  limits (HTTP 429), image-only PDFs with no text layer.
+  limits (HTTP 429), image-only PDFs with no text layer. `pkill -f <pattern>`
+  also matches the shell running it, so it can kill itself; stop jobs by PID.
 
 ## Model roles and keys
 
@@ -147,6 +148,15 @@ embeddings API or plain keyword search for small sources, or let the judge
 read everything when the source is tiny. Sizing from past runs: 5.7M chunks
 ≈ 12 h on an RTX 4090 and ~26 GB of vectors; 1.7M ≈ 3–4 h; smaller sources
 take minutes.
+
+**Start long jobs outside the agent session.** Anything that runs longer than a
+few minutes (downloads, embedding, overnight hunts) goes in a restartable
+script under `runs/`, launched detached so it survives the agent's session
+ending: `setsid nohup runs/<job>.sh >> runs/<job>.log 2>&1 < /dev/null &`, or
+in `tmux`/`screen`. A job started as the agent's own background task can die
+with the session, and restarting it later costs the half-finished work.
+Make each step skip what is already done, and log progress with timestamps so
+a fresh session can check `runs/<job>.log` and pick up.
 
 ## Folder map
 
