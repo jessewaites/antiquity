@@ -152,6 +152,17 @@ read everything when the source is tiny. Sizing from past runs: 5.7M chunks
 ≈ 12 h on an RTX 4090 and ~26 GB of vectors; 1.7M ≈ 3–4 h; smaller sources
 take minutes.
 
+**Questions first, data second.** Don't download and embed a whole collection
+because it exists. List the questions first. For each one, write down the years,
+regions and titles it needs, then embed only those, favouring years that several
+questions share. Check the size before you start: one newspaper collection's
+1890–1940 run was 225 GB of raw text, about three weeks on a single 4090 and
+~440 GB of vectors. If a question still needs a lot of data, choose between
+renting GPUs for a few days, embedding a subset of years, and a keyword
+prefilter (embed only the articles that contain the words; fine when a name is
+the question, but it gives up meaning-based recall). Keep everything you do
+embed: each source becomes ground that later questions can search for free.
+
 **Start long jobs outside the agent session.** Anything that runs longer than a
 few minutes (downloads, embedding, overnight hunts) goes in a restartable
 script under `runs/`, launched detached so it survives the agent's session

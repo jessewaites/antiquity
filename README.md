@@ -86,7 +86,9 @@ This is the loop from the investigation, written into every generated
    twice, and text recognition adds its own errors, so keyword search misses
    most of what is there. Turn every passage into a mathematical fingerprint
    of its meaning and search by what a passage is about. This is the
-   expensive step: millions of passages, one overnight run on a GPU.
+   expensive step: millions of passages, one overnight run on a GPU. So
+   choose the questions before the data, and embed only the years and
+   titles those questions need.
 3. **Sort cheap.** A search returns tens of thousands of hits. A tiny, fast
    decision model reads every one and answers only narrow questions: is this
    a real animal? is it wild? where is it? Reading 59,000 mentions of
