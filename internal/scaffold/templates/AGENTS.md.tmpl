@@ -71,6 +71,9 @@ happen.
 
 ## Rules
 
+- Write down what counts as a **find** in `CASE.md` before the first
+  candidate, and apply it the same way to every lead. If you change the rule
+  mid-run, re-check the leads you closed under the old one.
 - Verify on the original page image before calling anything a find. Until
   then it is a *candidate*. Say "candidate".
 - Read the **dateline**. The place is where the dispatch was written, not the
@@ -93,6 +96,10 @@ happen.
   `keys.yml`; ask before exceeding it.
 - Keep `NARRATIVE.md` current with credits (who had which idea). Keep
   `HANDOFF.md` current enough that a fresh session can continue.
+- When a site blocks automated access, don't work around it. Ask the human to
+  open the page, and give them the exact item: its title, where it sits on the
+  page, and a clickable link. Keep everything the human must do in one to-do
+  list with clickable links.
 - Never send, publish, post or email anything. Outreach goes in `drafts/` as
   plain text for a human to send.
 - Never print, log, commit or paste API keys. They live in `keys.yml` (chmod
@@ -117,6 +124,22 @@ happen.
   run is not optional.
 - **Over-early finds.** Candidates announced on day one that collapsed on the
   scan. Hold the word "find" until step 5.
+- **Same picture is not the same object.** When matching images (an old
+  printed illustration against a modern photo), a copy or a second version can
+  match as well as the original. Physical details and dates decide. Local-feature
+  matching (DISK + LightGlue + a RANSAC homography) separates same from
+  different cleanly: hundreds of geometrically consistent points against a
+  handful. Pages with several pictures make the match land on the neighbour, so
+  crop each one.
+- **Already known, already resolved.** Many strong matches turn out to have
+  been published or resolved long ago, often most of them. Run the novelty check
+  inside the pipeline, not after the excitement.
+- **Finds live in the gaps between databases.** One record knows where a thing
+  went, another knows what happened to it; nobody compares them item by item.
+  When finds cluster around one source, owner or event, ask why, then sweep the
+  cluster.
+- **Dead resources burn hours.** A server error for a missing image or page is
+  usually permanent. Skip it rather than retrying with back-off.
 - **Shell trivia.** zsh word-splitting, loops overwriting downloads, rate
   limits (HTTP 429), image-only PDFs with no text layer. `pkill -f <pattern>`
   also matches the shell running it, so it can kill itself; stop jobs by PID.
@@ -162,6 +185,25 @@ renting GPUs for a few days, embedding a subset of years, and a keyword
 prefilter (embed only the articles that contain the words; fine when a name is
 the question, but it gives up meaning-based recall). Keep everything you do
 embed: each source becomes ground that later questions can search for free.
+The same goes for downloads: fetch only what can pass your filters (same
+creator, matching dimensions, the right years). That can turn a days-long
+download into an hour and lose almost nothing. Check what is already on disk
+before going to the web.
+
+**When the data sprawls, give it a database.** Once a case has more than a few
+files of candidates, decisions and evidence, build one SQLite (or Postgres)
+database from them and let the agent query and update it directly: one row per
+candidate, its evidence, its status, and every decision with its reason. Rebuild
+it from the raw files with one command, so it never becomes the only copy, and
+keep decisions in an append-only log so every "no" can be traced and reopened.
+
+**Give the human a local review page.** Whenever something needs a human
+decision (pictures to compare, candidates to judge, pages to open), build a small
+local web page instead of pasting lists into the chat: one card per item, the
+evidence side by side, clickable links, and buttons that write the verdict
+straight to the database. Add a dashboard for running jobs and results, and a
+to-do page for whatever only the human can do. It is quick to build and it makes
+review fast, blind when needed, and recorded.
 
 **Start long jobs outside the agent session.** Anything that runs longer than a
 few minutes (downloads, embedding, overnight hunts) goes in a restartable
