@@ -152,24 +152,27 @@ happen.
 - **Dead resources burn hours.** A server error for a missing image or page is
   usually permanent. Skip it rather than retrying with back-off.
 - **The neighbour may be the find.** A match that lands on the wrong item of a
-  multi-item page is not just noise: look up the neighbour itself before closing
-  the lead. It can be a target in its own right.
-- **Page furniture matches everything.** A library logo, stamp or footer on
-  every scanned page gives strong image matches between unrelated pages. One page
-  matching many queries is the tell. Crop to the content.
-- **Other people's numbers.** A plate, page or catalogue number quoted from a
-  cited book gets parsed as the item's own. Take the item's own field (usually the
-  last one in the entry) and check a few by eye.
+  page with several (the next article, entry, illustration or row) is not just
+  noise: check the neighbour against your own records before closing the lead.
+  It can be a target in its own right.
+- **Page furniture matches everything.** A library logo, stamp, masthead or
+  footer printed on every scanned page gives strong image (or text) matches
+  between unrelated pages. One page matching many queries is the tell. Crop to the
+  content.
+- **Other people's numbers.** A page, issue, plate or reference number quoted
+  from a cited source gets parsed as the item's own. Know which field is the
+  item's own, and check a few by eye.
 - **Labels are not structure.** Web pages reuse field labels in search forms
   and menus. Parse the record's own markup, not the page text, and test on pages
   whose answers you already know.
 - **Follow the record's own citations.** When a record cites another archive's
-  number for the same object, open that card. The other archive may carry the
-  story past the point where the record stops.
-- **The novelty check includes the owners.** Before publishing a find, check
-  that it wasn't already published, settled or returned, and that the original
-  owners didn't get the object back and sell it themselves. Make this a gate
-  before anything goes public, not a later pass.
+  catalogue or reference number for the same thing, open that entry. The other
+  archive may carry the story past the point where the record stops.
+- **The novelty check includes the people closest to it.** Before publishing a
+  find, check not only the literature but whether the case was already resolved
+  by the people involved (a family, an institution, a local historian, a later
+  correction or retraction). Make this a gate before anything goes public, not a
+  later pass.
 - **Shell trivia.** zsh word-splitting; in zsh `path` (lower case) is tied to
   `PATH`, so a loop variable named `path` breaks every command; loops overwriting
   downloads, rate limits (HTTP 429), image-only PDFs with no text layer.
