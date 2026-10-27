@@ -99,7 +99,18 @@ happen.
 - When a site blocks automated access, don't work around it. Ask the human to
   open the page, and give them the exact item: its title, where it sits on the
   page, and a clickable link. Keep everything the human must do in one to-do
-  list with clickable links.
+  list with clickable links, and put those links in your chat reply too: the
+  human may never open the to-do file.
+- But first check it really is blocked. A fetch tool being refused is not the
+  site refusing you: try one polite request from a plain script with an honest
+  User-Agent, and read `robots.txt`. A TLS "unable to get local issuer
+  certificate" error usually means the server sends the wrong intermediate
+  certificate: fetch the right one from the URL in the certificate's own
+  Authority Information Access field and add it to a CA bundle. Never turn
+  verification off.
+- Automate the steps the human keeps repeating. If you ask them to paste the
+  same kind of page more than twice, write a small reader for it, check it
+  against the answers they already gave you, then stop asking.
 - Never send, publish, post or email anything. Outreach goes in `drafts/` as
   plain text for a human to send.
 - Never print, log, commit or paste API keys. They live in `keys.yml` (chmod
@@ -140,9 +151,33 @@ happen.
   cluster.
 - **Dead resources burn hours.** A server error for a missing image or page is
   usually permanent. Skip it rather than retrying with back-off.
-- **Shell trivia.** zsh word-splitting, loops overwriting downloads, rate
-  limits (HTTP 429), image-only PDFs with no text layer. `pkill -f <pattern>`
-  also matches the shell running it, so it can kill itself; stop jobs by PID.
+- **The neighbour may be the find.** A match that lands on the wrong item of a
+  page with several (the next article, entry, illustration or row) is not just
+  noise: check the neighbour against your own records before closing the lead.
+  It can be a target in its own right.
+- **Page furniture matches everything.** A library logo, stamp, masthead or
+  footer printed on every scanned page gives strong image (or text) matches
+  between unrelated pages. One page matching many queries is the tell. Crop to the
+  content.
+- **Other people's numbers.** A page, issue, plate or reference number quoted
+  from a cited source gets parsed as the item's own. Know which field is the
+  item's own, and check a few by eye.
+- **Labels are not structure.** Web pages reuse field labels in search forms
+  and menus. Parse the record's own markup, not the page text, and test on pages
+  whose answers you already know.
+- **Follow the record's own citations.** When a record cites another archive's
+  catalogue or reference number for the same thing, open that entry. The other
+  archive may carry the story past the point where the record stops.
+- **The novelty check includes the people closest to it.** Before publishing a
+  find, check not only the literature but whether the case was already resolved
+  by the people involved (a family, an institution, a local historian, a later
+  correction or retraction). Make this a gate before anything goes public, not a
+  later pass.
+- **Shell trivia.** zsh word-splitting; in zsh `path` (lower case) is tied to
+  `PATH`, so a loop variable named `path` breaks every command; loops overwriting
+  downloads, rate limits (HTTP 429), image-only PDFs with no text layer.
+  `pkill -f <pattern>` also matches the shell running it, so it can kill itself;
+  stop jobs by PID.
 
 ## Model roles and keys
 
