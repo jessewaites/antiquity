@@ -111,6 +111,20 @@ happen.
 - Automate the steps the human keeps repeating. If you ask them to paste the
   same kind of page more than twice, write a small reader for it, check it
   against the answers they already gave you, then stop asking.
+- Every lead, including ones that come up in conversation, goes into one lead
+  ledger with a status and, when closed, a reason from a fixed list. Leads that
+  live only in chat get lost; at the end, search the saved transcripts for item
+  ids that never reached the ledger.
+- Before any batch: run known answers through the real runner, run one of them
+  twice and diff the output, and write the cost arithmetic into the run log.
+  Long runs go detached with a PID file, and parallel agents each get their own
+  copy of the repository (a git worktree), never a shared working tree.
+- Every published sentence must be rebuildable from a linked source. Label
+  inferences as inferences; a negative claim ("no later record found") says what
+  was searched and when. Corrections get a dated update line; nothing is
+  silently changed.
+- Derive counts and totals from the data at build time. A number typed into
+  prose goes stale with the next find or withdrawal.
 - Never send, publish, post or email anything. Outreach goes in `drafts/` as
   plain text for a human to send.
 - Never print, log, commit or paste API keys. They live in `keys.yml` (chmod
@@ -173,6 +187,33 @@ happen.
   by the people involved (a family, an institution, a local historian, a later
   correction or retraction). Make this a gate before anything goes public, not a
   later pass.
+- **The shortlist hides finds.** A fixed top-k cut (top 10, top 20) silently
+  drops real matches. Measure it: rank your known answers in full and see how
+  many fall below the cut (here 8-20% per stage). Prefer a filter (size, date,
+  maker) to a fixed k, and read the top two or three candidates, not only the
+  best one.
+- **Pictures are printed sideways.** Catalogues and scans rotate images to fit
+  the page. Embed and rank all four rotations, not only verify them, and check
+  each candidate against every page it could be on, not just the page the
+  ranking picked.
+- **Strong scores still need eyes.** A high keypoint count proves the same
+  composition, not the same object: workshop copies, prints and later versions
+  pass easily, and repeated fine patterns (lace collars, ruffs, textiles) inflate
+  scores. Re-check at a stricter setting and compare aligned detail crops by eye
+  before calling it the same.
+- **Records change after you read them.** Public databases add sizes, photos
+  and status lines. Re-read the live record before publishing, and re-check any
+  claim that the record "gives no" something.
+- **The holder's own date decides.** A confirmed identification can still fail
+  as a find if the current or next holder acquired the item before the period
+  you are investigating. Read the holder's provenance and catalogue raisonné
+  entries for dates before announcing, and state any awkward date plainly.
+- **A walled website is not always closed data.** Look for an official API or
+  bulk download before scraping pages; the API may be open when the site is
+  not. Using an archived copy of a walled site is a decision for the human.
+- **Values are ranges, and a few items dominate.** If you estimate worth, give a
+  low and a high with public comparables, value attributions at their stated
+  level, and say what share of the total the top items carry.
 - **Shell trivia.** zsh word-splitting; in zsh `path` (lower case) is tied to
   `PATH`, so a loop variable named `path` breaks every command; loops overwriting
   downloads, rate limits (HTTP 429), image-only PDFs with no text layer.
